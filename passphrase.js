@@ -1,5 +1,5 @@
 const words = [];
-let addSpecial = false;
+let separator = localStorage.getItem('separator') || '.';
 
 function loadDictionary(callback) {
   const xhr = new XMLHttpRequest();
@@ -14,8 +14,10 @@ function loadDictionary(callback) {
 }
 
 function generatePassword() {
-  const separator = document.querySelector("#separator").value;
-  const password = [capitalizeFirstLetter(getRandomWord()), getRandomWord(), getRandomWord(), getRandomNumber()].join(separator) + (addSpecial ? getRandomSpecialChar() : '');
+  const password = [capitalizeFirstLetter(getRandomWord()), getRandomWord(), getRandomWord(), getRandomNumber()].join(separator);
+  if (document.querySelector("#addSpecial").checked) {
+    password += getRandomSpecialCharacter();
+  }
   document.querySelector(".password").textContent = password;
 }
 
@@ -28,9 +30,9 @@ function getRandomNumber() {
   return Math.floor(Math.random() * 99) + 1;
 }
 
-function getRandomSpecialChar() {
-  const specialChars = '!#$%&()*+/:<=>?@\\_~';
-  return specialChars.charAt(Math.floor(Math.random() * specialChars.length));
+function getRandomSpecialCharacter() {
+  const specialCharacters = "!#$%&()*+,-/:;<=>?@\\_~";
+  return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
 }
 
 function capitalizeFirstLetter(str) {
@@ -47,13 +49,21 @@ function copyPassword() {
   document.body.removeChild(textarea);
 }
 
-document.querySelector("#separator").addEventListener("change", generatePassword);
-
-document.querySelector("#addSpecial").addEventListener("change", function() {
-  addSpecial = this.checked;
+function changeSeparator() {
+  separator = document.querySelector("#separator").value;
+  localStorage.setItem('separator', separator);
   generatePassword();
-});
+}
+
+function loadSeparator() {
+  const separatorSelect = document.querySelector("#separator");
+  separatorSelect.value = separator;
+  separatorSelect.addEventListener("change", changeSeparator);
+}
 
 loadDictionary(function() {
+  loadSeparator();
   generatePassword();
 });
+
+document.querySelector("#addSpecial").addEventListener("change", generatePassword);
