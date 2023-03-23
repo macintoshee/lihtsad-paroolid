@@ -1,6 +1,4 @@
 const words = [];
-let separator = ".";
-let addSpecial = false;
 
 function loadDictionary(callback) {
   const xhr = new XMLHttpRequest();
@@ -15,14 +13,14 @@ function loadDictionary(callback) {
 }
 
 function generatePassword() {
-  const password = [
-    capitalizeFirstLetter(getRandomWord()), 
-    getRandomWord(), 
-    getRandomWord(), 
-    getRandomNumber(), 
-    addSpecial ? getRandomSpecial() : ''
-  ].join(separator);
+  const separator = document.querySelector("#separator").value;
+  const addSpecial = document.querySelector("#addSpecial").checked;
+  let password = [capitalizeFirstLetter(getRandomWord()), getRandomWord(), getRandomWord(), getRandomNumber()].join(separator);
   
+  if (addSpecial) {
+    password += getRandomSpecialCharacter();
+  }
+
   document.querySelector(".password").textContent = password;
 }
 
@@ -35,9 +33,9 @@ function getRandomNumber() {
   return Math.floor(Math.random() * 99) + 1;
 }
 
-function getRandomSpecial() {
-  const specials = '!#$%&()*+,-/:;<=>?@\\_~';
-  return specials[Math.floor(Math.random() * specials.length)];
+function getRandomSpecialCharacter() {
+  const specialCharacters = "!#$%&()*+,-/:;<=>?@\\_~";
+  return specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
 }
 
 function capitalizeFirstLetter(str) {
@@ -54,33 +52,17 @@ function copyPassword() {
   document.body.removeChild(textarea);
 }
 
-function updateSeparator() {
-  separator = document.querySelector("#separator").value;
-  generatePassword();
-  localStorage.setItem("separator", separator);
-}
-
-function updateAddSpecial() {
-  addSpecial = document.querySelector("#addSpecial").checked;
-  generatePassword();
-  localStorage.setItem("addSpecial", addSpecial);
-}
-
 loadDictionary(function() {
+  const separator = localStorage.getItem("separator") || ".";
+  document.querySelector("#separator").value = separator;
   generatePassword();
-  const savedSeparator = localStorage.getItem("separator");
-  if (savedSeparator) {
-    separator = savedSeparator;
-    document.querySelector("#separator").value = separator;
-    generatePassword();
-  }
-  const savedAddSpecial = localStorage.getItem("addSpecial");
-  if (savedAddSpecial) {
-    addSpecial = savedAddSpecial === "true";
-    document.querySelector("#addSpecial").checked = addSpecial;
-    generatePassword();
-  }
 });
 
-document.querySelector("#separator").addEventListener("change", updateSeparator);
-document.querySelector("#addSpecial").addEventListener("change", updateAddSpecial);
+document.querySelector("#separator").addEventListener("change", function() {
+  localStorage.setItem("separator", this.value);
+  generatePassword();
+});
+
+document.querySelector("#addSpecial").addEventListener("change", function() {
+  generatePassword();
+});
