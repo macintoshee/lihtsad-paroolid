@@ -1,5 +1,5 @@
 # Lihtsad eestikeelsed paroolid
-* Täiustaud xkcd stiilis parooligeneraator  http://xkcd.com/936/. Peaks rahuldama kõikide paroolikontrollijate nõudmised.
+* Täiustatud xkcd stiilis parooligeneraator  http://xkcd.com/936/. Peaks rahuldama kõikide paroolikontrollijate nõudmised.
 * Baseeerub Eesti keelsel täringvara sõnastikul, millest or eemaldatud erimärgid https://xn--tringvara-v2a.ee/
 * Kogu kood on 100% ulatuses kirjutatud ChatGPT poolt, selles pole ühtegi rida käsitsi kirjutatud koodi.
 * Demot vaata siit: https://parool.biker.ee/
