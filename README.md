@@ -1,4 +1,4 @@
-# lihtsad-paroolid
+# Lihtsad esti keelsed paroolid
 * Improved xkcd style password generator, added one capital letter and number to to satisfy password strength chek demands for those elements.
 * Generate password using Estonian diceware words.
 * Based on https://xn--tringvara-v2a.ee/files/Taringvara.txt
