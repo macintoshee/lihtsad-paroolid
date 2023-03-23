@@ -4,6 +4,7 @@
 * Kogu kood on 100% ulatuses kirjutatud ChatGPT poolt, selles pole ühtegi rida käsitsi kirjutatud koodi.
 * http://xkcd.com/936/
 * Demot vaata siit: https://parool.biker.ee/
+* Inspiratsiooni andis https://rabool.eu/
 
 # Estonian language passphrase generator
 * Improved xkcd style password generator, added one capital letter and number to to satisfy password strength chek demands for those elements.
@@ -12,3 +13,4 @@
 * All code is written by ChatGPT, there is not a single, hand written linde of code.
 * http://xkcd.com/936/
 * Demo can be seen here https://parool.biker.ee/
+* Source of inspiration https://rabool.eu/
