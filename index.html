@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lihtsad paroolid</title>
+  <meta name="description" content="Lihtsad, unikaalsed ja turvalsied eestikeelsed paroolid. Sõnaraamatus on üle 7000 eestikeelse sõna.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Lihtsad paroolid</h1>
+    <p class="description">Keeruline parool ei hakka pähe? Proovi parem midagi lihtsat. Kolm eestikeelset sõna. Üks suurtäht, eraldajaks kas punkt või sidekriips ja lõpus suvaline number. Peaks rahuldama iga paroolikontrolli nõuded.</p>
+    <div class="password-container">
+      <div class="password"></div>
+      <div class="buttons">
+        <button class="button copy" onclick="copyPassword()">Kopeeri</button>
+        <button class="button generate" onclick="generatePassword()">Uus parool</button>
+      </div>
+    </div>
+    <div class="separator">
+      <label for="separator">Vali eraldaja:</label>
+      <select id="separator">
+        <option value=".">Punkt</option>
+        <option value="-">Kriips</option>
+      </select>
+        <div class="disclaimer">Ühtegi parooli sellel lehel ei salvestata ega hoita. Serveri omanikul pole vähimatki aimu, millise parooli ja kes genereeris. Kõik paroolid genereeritakse automaatselt kasutades sõnaraamatut, milles on 7700 eestikeelset sõna.</div>
+    <div class="source-link-container">
+      <a class="source-link" href="https://github.com/macintoshee/lihtsad-paroolid" target="_blank">Lähtekood</a>
+    </div>
+    </div>
+
+  <script src="passphrase.js"></script>
+</body>
+</html>
