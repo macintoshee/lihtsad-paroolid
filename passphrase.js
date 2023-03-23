@@ -1,4 +1,5 @@
 const words = [];
+let addSpecial = false;
 
 function loadDictionary(callback) {
   const xhr = new XMLHttpRequest();
@@ -14,7 +15,7 @@ function loadDictionary(callback) {
 
 function generatePassword() {
   const separator = document.querySelector("#separator").value;
-  const password = [capitalizeFirstLetter(getRandomWord()), getRandomWord(), getRandomWord(), getRandomNumber()].join(separator);
+  const password = [capitalizeFirstLetter(getRandomWord()), getRandomWord(), getRandomWord(), getRandomNumber()].join(separator) + (addSpecial ? getRandomSpecialChar() : '');
   document.querySelector(".password").textContent = password;
 }
 
@@ -25,6 +26,11 @@ function getRandomWord() {
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 99) + 1;
+}
+
+function getRandomSpecialChar() {
+  const specialChars = '!#$%&()*+/:<=>?@\\_~';
+  return specialChars.charAt(Math.floor(Math.random() * specialChars.length));
 }
 
 function capitalizeFirstLetter(str) {
@@ -40,6 +46,13 @@ function copyPassword() {
   document.execCommand("copy");
   document.body.removeChild(textarea);
 }
+
+document.querySelector("#separator").addEventListener("change", generatePassword);
+
+document.querySelector("#addSpecial").addEventListener("change", function() {
+  addSpecial = this.checked;
+  generatePassword();
+});
 
 loadDictionary(function() {
   generatePassword();
