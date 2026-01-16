@@ -8,7 +8,6 @@
 # Estonian language passphrase generator
 * Improved xkcd style ( http://xkcd.com/936/) password generator, added one capital letter and number to to satisfy password strength chek demands for those elements.
 * Generate password using Estonian diceware words.
-* Based on https://xn--tringvara-v2a.ee/files/Taringvara.txt
 * All code is written by ChatGPT, there is not a single, hand written linde of code.
 * Demo can be seen here https://parool.biker.ee/
 * Source of inspiration https://rabool.eu/
