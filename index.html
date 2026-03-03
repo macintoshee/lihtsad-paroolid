@@ -3,43 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lihtsad paroolid</title>
-  <meta name="description" content="Lihtsad, unikaalsed ja turvalised eestikeelsed paroolid. Sõnaraamatus on üle 7000 eestikeelse sõna.">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <meta name="description" content="Genereeri turvalisi, meeldejäävaid eestikeelseid paroolilaused.">
+  <title>Lihtsad paroolid — eestikeelne parooligeneraator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body onload="loadSeparator()">
+<body>
   <div class="container">
-    <h1 class="title">Lihtsad paroolid</h1>
-    <p class="description">Raskusi parooli välja mõtlemisega? Keeruline parool ei jää meelde? Proovi midagi lihtsat. Kolm eestikeelset sõna. Üks suurtäht, eraldajaks kas punkt või sidekriips ja lõpus suvaline number. Peaks rahuldama iga paroolikontrolli nõuded ja lahti muukimiseks kulub 5 miljonit aastat.</p>
-    <div class="password-container">
-      <div class="password"></div>
-      <div class="buttons">
-        <button class="button copy" onclick="copyPassword()">Kopeeri</button>
-        <button class="button generate" onclick="generatePassword()">Uus parool</button>
+
+    <header>
+      <h1>lihtsad<span>.</span>paroolid</h1>
+      <p class="hook">Raskusi parooli välja mõtlemisega? Keeruline parool ei jää meelde?<br>Proovi midagi lihtsat. Eestikeelsed sõnad ja erimärgid.<br>Rahuldab iga parooligurmaani vajadused ja lahti muukimiseks kulub miljoneid aastaid.</p>
+    </header>
+
+    <div class="card">
+      <span id="output">—</span>
+      <div class="entropy-wrap">
+        <div class="entropy-track">
+          <div class="entropy-fill" id="entropy-bar"></div>
+        </div>
+        <span id="entropy-text"></span>
       </div>
     </div>
-    <div class="separator">
-      <label for="separator">Vali eraldaja:</label>
-      <select id="separator">
-        <option value=".">Punkt</option>
-        <option value="-">Kriips</option>
-        <option value="/">Kaldkriips</option>
-        <option value=":">Koolon</option>
-        <option value=";">Semikoolon</option>
-        <option value=",">Koma</option>
-      </select>
-      <label for="addSpecial">Lisa erimärk</label>
-      <input type="checkbox" id="addSpecial">
-        <div class="disclaimer">Ühtegi parooli sellel lehel ei salvestata ega hoita. Serveri omanikul pole vähimatki aimu, millise parooli ja kes genereeris. Kõik paroolid genereeritakse automaatselt kasutades sõnaraamatut, milles on 7700 eestikeelset sõna.
-        Kahtled parooli turvalisuses? <a href="https://www.security.org/how-secure-is-my-password/" target="_blank">Vaata järgi</a>, kui tugev sinu parool on. </div>
-    <div class="source-link-container">
-      <a class="source-link" href="https://github.com/macintoshee/lihtsad-paroolid" target="_blank">Lähtekood</a>
-    </div>
+
+    <div class="btn-row">
+      <button id="generate-btn">↻ Genereeri</button>
+      <button id="copy-btn">⎘ Kopeeri</button>
     </div>
 
+    <div class="card">
+      <div class="controls">
+
+        <div class="control-group">
+          <label class="group-label">Sõnade arv</label>
+          <div class="radio-row">
+            <input type="radio" name="wordcount" id="w3" value="3">
+            <label for="w3">3 sõna</label>
+            <input type="radio" name="wordcount" id="w4" value="4" checked>
+            <label for="w4">4 sõna</label>
+            <input type="radio" name="wordcount" id="w5" value="5">
+            <label for="w5">5 sõna</label>
+            <input type="radio" name="wordcount" id="w6" value="6">
+            <label for="w6">6 sõna</label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="group-label">Eraldaja</label>
+          <div class="radio-row">
+            <input type="radio" name="separator" id="sep-dot" value="dot" checked>
+            <label for="sep-dot">punkt .</label>
+            <input type="radio" name="separator" id="sep-colon" value="colon">
+            <label for="sep-colon">koolon :</label>
+            <input type="radio" name="separator" id="sep-dash" value="dash">
+            <label for="sep-dash">kriips —</label>
+            <input type="radio" name="separator" id="sep-slash" value="slash">
+            <label for="sep-slash">kaldkriips /</label>
+            <input type="radio" name="separator" id="sep-under" value="under">
+            <label for="sep-under">alakriips _</label>
+            <input type="radio" name="separator" id="sep-number" value="number">
+            <label for="sep-number">number</label>
+            <input type="radio" name="separator" id="sep-random" value="random">
+            <label for="sep-random">juhuslik ✦</label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="group-label">Lisavalikud</label>
+          <div class="radio-row" id="extras-row">
+            <input type="checkbox" name="extras" id="extra-special" value="special">
+            <label for="extra-special">juhuslikud erimärgid</label>
+            <input type="checkbox" name="extras" id="extra-enddigit" value="enddigit" checked>
+            <label for="extra-enddigit">number lõpus</label>
+            <input type="checkbox" name="extras" id="extra-randcap" value="randcap">
+            <label for="extra-randcap">suvaline suurtäht</label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="group-label">Piiratud pikkus</label>
+          <div class="radio-row">
+            <input type="radio" name="maxlen" id="ml-0" value="0" checked>
+            <label for="ml-0">piiramatu</label>
+            <input type="radio" name="maxlen" id="ml-8" value="8">
+            <label for="ml-8">8</label>
+            <input type="radio" name="maxlen" id="ml-10" value="10">
+            <label for="ml-10">10</label>
+            <input type="radio" name="maxlen" id="ml-12" value="12">
+            <label for="ml-12">12</label>
+            <input type="radio" name="maxlen" id="ml-16" value="16">
+            <label for="ml-16">16</label>
+            <input type="radio" name="maxlen" id="ml-20" value="20">
+            <label for="ml-20">20</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="info-block">
+      <p>Ühtegi parooli sellel lehel ei salvestata ega hoita. Serveri omanikul pole vähimatki aimu, millise parooli ja kes genereeris. Kõik paroolid genereeritakse automaatselt kasutades sõnaraamatut, milles on enam kui 7700 eestikeelset sõna.</p>
+    </div>
+
+    <footer>
+      <p class="dict-info">Sõnastik: <span id="dict-size">laadimine…</span> sõna &mdash; <a href="https://täringvara.ee/" target="_blank" rel="noopener">täringvara.ee</a> alusel</p>
+      <p>
+        v2.0 &nbsp;·&nbsp;
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
+        &nbsp;·&nbsp;
+        Kood: <a href="https://github.com/macintoshee/lihtsad-paroolid" target="_blank" rel="noopener">GitHub</a>
+        &nbsp;·&nbsp;
+        Inspiratsioon: <a href="https://rabool.eu/" target="_blank" rel="noopener">rabool.eu</a>
+        &nbsp;·&nbsp;
+        <a href="https://biker.ee" target="_blank" rel="noopener">biker.ee</a>
+      </p>
+    </footer>
+
+  </div>
   <script src="passphrase.js"></script>
 </body>
 </html>
