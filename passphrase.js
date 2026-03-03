@@ -119,6 +119,8 @@ let dictionary = [];
       }
     }
 
+    let firstLoad = true;
+
     function generate() {
       const genBtn = document.getElementById('generate-btn');
       if (genBtnTimer) { clearTimeout(genBtnTimer); genBtnTimer = null; genBtn.textContent = GEN_BTN_LABEL; }
@@ -188,7 +190,10 @@ let dictionary = [];
       output.style.color = '';
       output.title = '';
 
-      copyToClipboard(phrase).then(ok => { if (ok) showCopied(true); });
+      if (!firstLoad) {
+        copyToClipboard(phrase).then(ok => { if (ok) showCopied(true); });
+      }
+      firstLoad = false;
       updateEntropy();
       saveSettings({ words, separator, addSpecial, randCap: document.getElementById('extra-randcap').checked, endDigit: document.getElementById('extra-enddigit').checked, maxLen: parseInt(document.querySelector('input[name="maxlen"]:checked').value) });
     }
