@@ -228,4 +228,13 @@ let dictionary = [];
       });
 
       generate();
+
+      // külastuste loendur
+      fetch('counter.php')
+        .then(r => r.json())
+        .then(d => {
+          const el = document.getElementById('visit-count');
+          if (el) el.textContent = d.count.toLocaleString('et-EE') + ' külastust alates 02.2026';
+        })
+        .catch(() => {});
     });
